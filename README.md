@@ -16,7 +16,7 @@ A modern Data Lakehouse implementation for mobility analysis using a Three Tier 
 - Data Processing: Python (Pandas, GeoPandas).
 - Visualization: Kepler.gl
 
-## Structure of the repository
+## Repository Structure
 ├── dags/                         # Airflow DAGs
 │   ├── Bronze_Ingest_Dag.py      
 │   ├── Silver_Transform_Dag.py
