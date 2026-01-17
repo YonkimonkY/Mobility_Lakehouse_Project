@@ -17,6 +17,7 @@ A modern Data Lakehouse implementation for mobility analysis using a Three Tier 
 - Visualization: Kepler.gl
 
 ## Repository Structure
+```
 ├── dags/                         # Airflow DAGs
 │   ├── Bronze_Ingest_Dag.py      
 │   ├── Silver_Transform_Dag.py
@@ -44,7 +45,7 @@ A modern Data Lakehouse implementation for mobility analysis using a Three Tier 
 │   ├── process_gold.py
 │   └── visualization.py          # Map generation logic
 └── requirements.txt              # Project dependencies
-
+```
 ## Requirements
 - Python 3.9+.
 - Packages used in the `requirements.txt`.
