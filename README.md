@@ -10,7 +10,7 @@ Proyecto de lakehouse para analisis de movilidad con capas Bronze, Silver y Gold
 ## Tecnologias
 - DuckDB (incluye extension spatial)
 - Python
-- Airflow (DAGs opcionales)
+- Airflow (DAGs)
 - Pandas / GeoPandas / Kepler.gl
 
 ## Estructura del repositorio
@@ -76,13 +76,7 @@ python src/process_gold.py
 python src/visualization.py
 ```
 
-## Salidas
-- `data/processed/bronze.duckdb`
-- `data/processed/silver.duckdb`
-- `data/processed/gold.duckdb`
-- `reports/mapa_movilidad.html`
-
-## Airflow (opcional)
+## Airflow
 En `dags/` hay DAGs para ejecucion en S3/DuckLake. Requiere credenciales AWS y, si aplica, conexion a Postgres/Neon para metadata.
 
 ## Scripts utiles

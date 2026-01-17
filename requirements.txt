@@ -5,3 +5,7 @@ geopandas
 shapely
 psycopg2-binary
 python-dateutil
+keplergl
+requests
+tqdm
+apache-airflow
