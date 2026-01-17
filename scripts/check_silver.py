@@ -1,18 +1,33 @@
 import duckdb
 import os
 
-os.environ['USUARIO_POSTGRES'] = ''
-os.environ['CONTR_POSTGRES'] = ''
+MY_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY_ID', '')
+MY_SECRET_KEY = os.getenv('AWS_SECRET_ACCESS_KEY', '')
+POSTGRES_USER = os.getenv('USUARIO_POSTGRES', '')
+POSTGRES_PASSWORD = os.getenv('CONTR_POSTGRES', '')
+
+if not POSTGRES_USER or not POSTGRES_PASSWORD:
+    raise RuntimeError("Faltan credenciales Postgres: USUARIO_POSTGRES y CONTR_POSTGRES")
 
 con = duckdb.connect()
 con.execute('INSTALL postgres; LOAD postgres; INSTALL ducklake; LOAD ducklake; INSTALL aws; LOAD aws;')
 
-MY_ACCESS_KEY = '' 
-MY_SECRET_KEY = ''
+if MY_ACCESS_KEY and MY_SECRET_KEY:
+    con.execute(
+        "CREATE OR REPLACE SECRET secret_s3 ("
+        f"TYPE S3, KEY_ID '{MY_ACCESS_KEY}', SECRET '{MY_SECRET_KEY}', REGION 'eu-central-1');"
+    )
 
-con.execute(f"CREATE OR REPLACE SECRET secret_s3 (TYPE S3, KEY_ID '{MY_ACCESS_KEY}', SECRET '{MY_SECRET_KEY}', REGION 'eu-central-1');")
-con.execute("CREATE OR REPLACE SECRET secreto_postgres (TYPE postgres, HOST 'ep-silent-art-agv6w15r-pooler.c-2.eu-central-1.aws.neon.tech', PORT 5432, DATABASE neondb, USER 'neondb_owner', PASSWORD 'npg_xzltM9Ign1XO');")
-con.execute("CREATE OR REPLACE SECRET secreto_ducklake (TYPE ducklake, METADATA_PATH '', METADATA_PARAMETERS MAP {'TYPE': 'postgres', 'SECRET': 'secreto_postgres'});")
+con.execute(
+    "CREATE OR REPLACE SECRET secreto_postgres ("
+    "TYPE postgres, HOST 'ep-silent-art-agv6w15r-pooler.c-2.eu-central-1.aws.neon.tech', "
+    "PORT 5432, DATABASE neondb, "
+    f"USER '{POSTGRES_USER}', PASSWORD '{POSTGRES_PASSWORD}');"
+)
+con.execute(
+    "CREATE OR REPLACE SECRET secreto_ducklake (TYPE ducklake, METADATA_PATH '', "
+    "METADATA_PARAMETERS MAP {'TYPE': 'postgres', 'SECRET': 'secreto_postgres'});"
+)
 con.execute("ATTACH 'ducklake:secreto_ducklake' AS lakehouse (DATA_PATH 's3://bigdatabucket-ducklake/ducklake/')")
 con.execute('USE lakehouse')
 
