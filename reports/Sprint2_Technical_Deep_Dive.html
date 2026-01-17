@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sprint2_technical_deep_dive</title>
+    <style>
+        @media print {
+            @page {
+                margin: 2cm;
+            }
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+            pre, blockquote, table {
+                page-break-inside: avoid;
+            }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-top: 40px;
+            font-size: 2.2em;
+        }
+        
+        h1:first-child {
+            margin-top: 0;
+        }
+        
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #95a5a6;
+            padding-bottom: 10px;
+            margin-top: 35px;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            color: #7f8c8d;
+            margin-top: 25px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #95a5a6;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        
+        code {
+            background-color: #f8f9fa;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+            border: 1px solid #e1e4e8;
+        }
+        
+        pre {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+            line-height: 1.5;
+            border: 1px solid #dfe2e5;
+        }
+        
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border: none;
+            font-size: 1em;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            font-size: 0.95em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        blockquote {
+            border-left: 5px solid #3498db;
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #555;
+            background-color: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #7f8c8d;
+        }
+        
+        a {
+            color: #3498db;
+            text-decoration: none;
+            border-bottom: 1px dotted #3498db;
+        }
+        
+        a:hover {
+            color: #2980b9;
+            border-bottom: 1px solid #2980b9;
+        }
+        
+        hr {
+            border: none;
+            border-top: 2px solid #e1e4e8;
+            margin: 30px 0;
+        }
+        
+        .toc {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .header h1 {
+            border: none;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #e1e4e8;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        .note {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sprint 2: Mobility Lakehouse</h1>
+            <p>Documentación técnica completa</p>
+            <p style="color: #7f8c8d;">Generado: 2025-12-04</p>
+        </div>
+        
+        <h1 id="sprint-2-technical-deep-dive-codigo-completo-explicado">Sprint 2: Technical Deep Dive - Código Completo Explicado</h1>
+<h2 id="parte-1-ingesta-bronze-ingest_bronzepy">PARTE 1: INGESTA BRONZE (ingest_bronze.py)</h2>
+<h3 id="configuracion-y-conexion">Configuración y Conexión</h3>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">duckdb</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Rutas absolutas desde el directorio raíz del proyecto</span>
+<span class="n">DB_PATH</span> <span class="o">=</span> <span class="s1">&#39;data/processed/bronze.duckdb&#39;</span>
+<span class="n">RAW_DATA_PATH</span> <span class="o">=</span> <span class="s1">&#39;data/raw&#39;</span>
+<span class="n">SQL_PATH</span> <span class="o">=</span> <span class="s1">&#39;src/sql/bronze.sql&#39;</span>
+</code></pre></div>
+
+<p><strong>¿Por qué rutas relativas?</strong></p>
+<ul>
+<li>El script se ejecuta desde la raíz del proyecto (<code>mobility_lakehouse/</code>)</li>
+<li>Portabilidad: funciona en cualquier máquina sin hardcodear rutas</li>
+<li><code>data/processed/</code> es el directorio estándar para bases de datos procesadas</li>
+</ul>
+<h3 id="funcion-de-conexion">Función de Conexión</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_connection</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Crea o conecta a la base de datos Bronze.</span>
+<span class="sd">    Si el archivo no existe, DuckDB lo crea automáticamente.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">DB_PATH</span><span class="p">),</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">duckdb</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">DB_PATH</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Explicación línea por línea</strong>:</p>
+<ol>
+<li><code>os.makedirs(...)</code> → Crea el directorio <code>data/processed/</code> si no existe</li>
+<li><code>exist_ok=True</code> → No falla si el directorio ya existe</li>
+<li><code>duckdb.connect(DB_PATH)</code> → Crea el archivo <code>.duckdb</code> o se conecta si existe</li>
+</ol>
+<h3 id="ingesta-de-csv-con-copy">Ingesta de CSV con COPY</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">ingest_mitma_viajes</span><span class="p">(</span><span class="n">con</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Carga archivos CSV de viajes MITMA a Bronze.</span>
+<span class="sd">    Usa COPY FROM para bulk loading (10-100x más rápido que INSERT).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📥 Ingiriendo MITMA viajes...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Crear tabla Bronze (schema-on-read: todo VARCHAR)</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        CREATE TABLE IF NOT EXISTS bronze_mitma_viajes (</span>
+<span class="s2">            fecha VARCHAR,</span>
+<span class="s2">            periodo VARCHAR,</span>
+<span class="s2">            origen VARCHAR,</span>
+<span class="s2">            destino VARCHAR,</span>
+<span class="s2">            edad VARCHAR,</span>
+<span class="s2">            sexo VARCHAR,</span>
+<span class="s2">            viajes VARCHAR,</span>
+<span class="s2">            viajes_km VARCHAR</span>
+<span class="s2">        )</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Directorio de archivos CSV</span>
+    <span class="n">viajes_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">RAW_DATA_PATH</span><span class="p">)</span> <span class="o">/</span> <span class="s1">&#39;mitma&#39;</span> <span class="o">/</span> <span class="s1">&#39;viajes&#39;</span>
+
+    <span class="c1"># Iterar sobre todos los CSV en el directorio</span>
+    <span class="k">for</span> <span class="n">csv_file</span> <span class="ow">in</span> <span class="n">viajes_path</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.csv&#39;</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># COPY FROM = bulk load (mucho más rápido)</span>
+            <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                COPY bronze_mitma_viajes</span>
+<span class="s2">                FROM &#39;</span><span class="si">{</span><span class="n">csv_file</span><span class="si">}</span><span class="s2">&#39;</span>
+<span class="s2">                (HEADER, DELIMITER &#39;,&#39;, QUOTE &#39;&quot;&#39;)</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ✅ </span><span class="si">{</span><span class="n">csv_file</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="c1"># Si un archivo falla, continúa con el siguiente</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  ⚠️  Error en </span><span class="si">{</span><span class="n">csv_file</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">continue</span>
+
+    <span class="c1"># Verificar cuántas filas se cargaron</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT COUNT(*) FROM bronze_mitma_viajes&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  📊 Total: </span><span class="si">{</span><span class="n">count</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> viajes&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Conceptos clave</strong>:</p>
+<ol>
+<li>
+<p><strong><code>CREATE TABLE IF NOT EXISTS</code></strong>:</p>
+</li>
+<li>
+<p>Idempotencia: puedes ejecutar el script múltiples veces</p>
+</li>
+<li>
+<p>Si la tabla existe, no hace nada (no falla)</p>
+</li>
+<li>
+<p><strong>Schema-on-Read (todo VARCHAR)</strong>:</p>
+</li>
+<li>
+<p>Bronze no valida tipos de datos</p>
+</li>
+<li>Flexibilidad: si el CSV tiene errores de formato, igual se carga</li>
+<li>
+<p>La conversión de tipos se hace en Silver</p>
+</li>
+<li>
+<p><strong><code>COPY FROM</code> vs <code>INSERT</code></strong>:</p>
+</li>
+</ol>
+<p>```python
+   # ❌ LENTO (fila por fila, miles de transacciones)
+   for row in csv_reader:
+       con.execute("INSERT INTO table VALUES (?, ?, ...)", row)</p>
+<p># ✅ RÁPIDO (bulk load, 1 sola transacción)
+   con.execute("COPY table FROM 'file.csv' (HEADER, DELIMITER ',')")
+   ```</p>
+<ol>
+<li><strong>Manejo de errores con <code>continue</code></strong>:</li>
+<li>Si un CSV está corrupto, no para toda la ingesta</li>
+<li>Logs claros: sabes qué archivo falló</li>
+<li>Re-procesamiento parcial: solo reingesto los fallidos</li>
+</ol>
+<hr />
+<h2 id="parte-2-transformacion-silver-process_silverpy">PARTE 2: TRANSFORMACIÓN SILVER (process_silver.py)</h2>
+<h3 id="configuracion-de-memoria-y-rendimiento">Configuración de Memoria y Rendimiento</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">process_month</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Procesa un mes de datos desde Bronze a Silver.</span>
+<span class="sd">    Optimizado para máximo rendimiento.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Configurar DuckDB para máximo rendimiento</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SET preserve_insertion_order=false&quot;</span><span class="p">)</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SET memory_limit=&#39;16GB&#39;&quot;</span><span class="p">)</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SET max_temp_directory_size=&#39;80GB&#39;&quot;</span><span class="p">)</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SET threads=8&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Explicación de cada PRAGMA</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Pragma</th>
+<th>Qué hace</th>
+<th>Por qué lo usamos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>preserve_insertion_order=false</code></td>
+<td>DuckDB puede reordenar filas</td>
+<td>+20% velocidad en agregaciones</td>
+</tr>
+<tr>
+<td><code>memory_limit='16GB'</code></td>
+<td>Usa hasta 16GB de RAM</td>
+<td>Usuario tiene 32GB, usamos la mitad</td>
+</tr>
+<tr>
+<td><code>max_temp_directory_size='80GB'</code></td>
+<td>Permite usar 80GB de disco temporal</td>
+<td>Si no cabe en RAM, usa disco (spill)</td>
+</tr>
+<tr>
+<td><code>threads=8</code></td>
+<td>Usa 8 cores del CPU</td>
+<td>Paraleliza GROUP BY, JOINs</td>
+</tr>
+</tbody>
+</table>
+<h3 id="carga-directa-sin-joins-modo-turbo">Carga Directa sin JOINs (MODO TURBO)</h3>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">insert_viajes_turbo</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    INSERT sin JOINs para máximo rendimiento.</span>
+<span class="sd">    60x más rápido que la versión con JOINs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">fecha_inicio</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">year</span><span class="si">}{</span><span class="n">month</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">01&quot;</span>
+    <span class="n">fecha_fin</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">year</span><span class="si">}{</span><span class="n">month</span><span class="si">:</span><span class="s2">02d</span><span class="si">}</span><span class="s2">31&quot;</span>
+
+    <span class="c1"># INSERT directo sin verificar FKs</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        INSERT INTO silver_fact_viajes</span>
+<span class="s2">        SELECT</span>
+<span class="s2">            ROW_NUMBER() OVER () as viaje_id,</span>
+<span class="s2">            strptime(v.fecha, &#39;%Y%m%d&#39;)::DATE,</span>
+<span class="s2">            CAST(RIGHT(v.periodo, 2) AS INTEGER),</span>
+<span class="s2">            v.origen,</span>
+<span class="s2">            v.destino,</span>
+<span class="s2">            v.edad,</span>
+<span class="s2">            v.sexo,</span>
+<span class="s2">            CAST(v.viajes AS DOUBLE),</span>
+<span class="s2">            CAST(v.viajes_km AS DOUBLE)</span>
+<span class="s2">        FROM bronze_db.bronze_mitma_viajes v</span>
+<span class="s2">        WHERE v.fecha &gt;= &#39;</span><span class="si">{</span><span class="n">fecha_inicio</span><span class="si">}</span><span class="s2">&#39;</span>
+<span class="s2">          AND v.fecha &lt;= &#39;</span><span class="si">{</span><span class="n">fecha_fin</span><span class="si">}</span><span class="s2">&#39;</span>
+<span class="s2">          AND CAST(v.viajes AS DOUBLE) &gt; 0</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Comparación ANTES vs DESPUÉS</strong>:</p>
+<p><strong>ANTES (con JOINs) - 1540 segundos</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">silver_fact_viajes</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="p">...</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">bronze_mitma_viajes</span><span class="w"> </span><span class="n">v</span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">silver_dim_zonas</span><span class="w"> </span><span class="n">zo</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">origen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zo</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">silver_dim_zonas</span><span class="w"> </span><span class="n">zd</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">destino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zd</span><span class="p">.</span><span class="n">zone_id</span>
+</code></pre></div>
+
+<p><strong>DESPUÉS (sin JOINs) - 25 segundos</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">silver_fact_viajes</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="p">...</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">bronze_mitma_viajes</span><span class="w"> </span><span class="n">v</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">fecha</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="s1">&#39;20230101&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="s1">&#39;20230131&#39;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="parte-3-modelo-de-gravedad-goldsql">PARTE 3: MODELO DE GRAVEDAD (gold.sql)</h2>
+<h3 id="cte-completo-con-explicaciones">CTE Completo con Explicaciones</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Modelo de Gravedad: Tij = k * Pi * Ej / d²</span>
+<span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">gold_gravity_model</span>
+<span class="k">WITH</span>
+
+<span class="c1">-- PASO 1: Flujos base y distancias</span>
+<span class="n">base_flows</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">v</span><span class="p">.</span><span class="n">origen_zone_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">zo</span><span class="p">.</span><span class="n">zone_name</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">origen_name</span><span class="p">,</span>
+<span class="w">        </span><span class="n">v</span><span class="p">.</span><span class="n">destino_zone_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">zd</span><span class="p">.</span><span class="n">zone_name</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">destino_name</span><span class="p">,</span>
+<span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">viajes</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">observed_trips</span><span class="p">,</span>
+
+<span class="w">        </span><span class="c1">-- Distancia Haversine</span>
+<span class="w">        </span><span class="n">GREATEST</span><span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">5</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">111</span><span class="p">.</span><span class="mi">32</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">SQRT</span><span class="p">(</span>
+<span class="w">                </span><span class="n">POW</span><span class="p">(</span><span class="n">ao</span><span class="p">.</span><span class="n">centroid_lat</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ad</span><span class="p">.</span><span class="n">centroid_lat</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">                </span><span class="n">POW</span><span class="p">((</span><span class="n">ao</span><span class="p">.</span><span class="n">centroid_lon</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ad</span><span class="p">.</span><span class="n">centroid_lon</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">COS</span><span class="p">(</span><span class="n">RADIANS</span><span class="p">((</span><span class="n">ao</span><span class="p">.</span><span class="n">centroid_lat</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">ad</span><span class="p">.</span><span class="n">centroid_lat</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">)),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="w">            </span><span class="p">)</span>
+<span class="w">        </span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">distance_km</span><span class="p">,</span>
+
+<span class="w">        </span><span class="n">ao</span><span class="p">.</span><span class="n">centroid_lat</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">o_lat</span><span class="p">,</span><span class="w"> </span><span class="n">ao</span><span class="p">.</span><span class="n">centroid_lon</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">o_lon</span><span class="p">,</span>
+<span class="w">        </span><span class="n">ad</span><span class="p">.</span><span class="n">centroid_lat</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">d_lat</span><span class="p">,</span><span class="w"> </span><span class="n">ad</span><span class="p">.</span><span class="n">centroid_lon</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">d_lon</span>
+
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">silver_db</span><span class="p">.</span><span class="n">silver_fact_viajes</span><span class="w"> </span><span class="n">v</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">silver_db</span><span class="p">.</span><span class="n">silver_dim_zonas</span><span class="w"> </span><span class="n">zo</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">origen_zone_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zo</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">silver_db</span><span class="p">.</span><span class="n">silver_dim_zonas</span><span class="w"> </span><span class="n">zd</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">destino_zone_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zd</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">silver_db</span><span class="p">.</span><span class="n">silver_dim_zona_atributos</span><span class="w"> </span><span class="n">ao</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">origen_zone_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ao</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">silver_db</span><span class="p">.</span><span class="n">silver_dim_zona_atributos</span><span class="w"> </span><span class="n">ad</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">destino_zone_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ad</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">origen_zone_id</span><span class="p">,</span><span class="w"> </span><span class="n">zo</span><span class="p">.</span><span class="n">zone_name</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">destino_zone_id</span><span class="p">,</span><span class="w"> </span><span class="n">zd</span><span class="p">.</span><span class="n">zone_name</span><span class="p">,</span>
+<span class="w">             </span><span class="n">ao</span><span class="p">.</span><span class="n">centroid_lat</span><span class="p">,</span><span class="w"> </span><span class="n">ao</span><span class="p">.</span><span class="n">centroid_lon</span><span class="p">,</span><span class="w"> </span><span class="n">ad</span><span class="p">.</span><span class="n">centroid_lat</span><span class="p">,</span><span class="w"> </span><span class="n">ad</span><span class="p">.</span><span class="n">centroid_lon</span>
+<span class="w">    </span><span class="k">HAVING</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">viajes</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">100</span>
+<span class="p">),</span>
+
+<span class="c1">-- PASO 2: Producción (Pi)</span>
+<span class="n">zone_prod</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">origen_zone_id</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">zone_id</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">observed_trips</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Pi</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">base_flows</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">origen_zone_id</span>
+<span class="p">),</span>
+
+<span class="c1">-- PASO 3: Atracción (Ej)</span>
+<span class="n">zone_attr</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">destino_zone_id</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">zone_id</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">observed_trips</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Ej</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">base_flows</span><span class="w"> </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">destino_zone_id</span>
+<span class="p">),</span>
+
+<span class="c1">-- PASO 4: Factor de gravedad (Pi*Ej/d²)</span>
+<span class="n">gravity_term</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">b</span><span class="p">.</span><span class="o">*</span><span class="p">,</span>
+<span class="w">        </span><span class="n">p</span><span class="p">.</span><span class="n">Pi</span><span class="p">,</span>
+<span class="w">        </span><span class="n">a</span><span class="p">.</span><span class="n">Ej</span><span class="p">,</span>
+<span class="w">        </span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">Pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">Ej</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">POW</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">distance_km</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">gravity_factor</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">base_flows</span><span class="w"> </span><span class="n">b</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">zone_prod</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">origen_zone_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">zone_attr</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">destino_zone_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">distance_km</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+<span class="p">),</span>
+
+<span class="c1">-- PASO 5: Factor K (calibración global)</span>
+<span class="n">global_k</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">observed_trips</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">gravity_factor</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">k_factor</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">gravity_term</span>
+<span class="p">)</span>
+
+<span class="c1">-- PASO 6: Insertar con viajes teóricos</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">ROW_NUMBER</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">g</span><span class="p">.</span><span class="n">observed_trips</span><span class="w"> </span><span class="k">DESC</span><span class="p">),</span>
+<span class="w">    </span><span class="k">g</span><span class="p">.</span><span class="n">origen_zone_id</span><span class="p">,</span><span class="w"> </span><span class="k">g</span><span class="p">.</span><span class="n">origen_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">g</span><span class="p">.</span><span class="n">destino_zone_id</span><span class="p">,</span><span class="w"> </span><span class="k">g</span><span class="p">.</span><span class="n">destino_name</span><span class="p">,</span>
+<span class="w">    </span><span class="k">g</span><span class="p">.</span><span class="n">observed_trips</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span><span class="k">g</span><span class="p">.</span><span class="n">gravity_factor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="p">.</span><span class="n">k_factor</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">theoretical_trips</span><span class="p">,</span>
+<span class="w">    </span><span class="k">g</span><span class="p">.</span><span class="n">observed_trips</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">NULLIF</span><span class="p">((</span><span class="k">g</span><span class="p">.</span><span class="n">gravity_factor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="p">.</span><span class="n">k_factor</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">ratio_obs_theo</span><span class="p">,</span>
+<span class="w">    </span><span class="k">g</span><span class="p">.</span><span class="n">distance_km</span><span class="p">,</span>
+<span class="w">    </span><span class="k">g</span><span class="p">.</span><span class="n">o_lat</span><span class="p">,</span><span class="w"> </span><span class="k">g</span><span class="p">.</span><span class="n">o_lon</span><span class="p">,</span><span class="w"> </span><span class="k">g</span><span class="p">.</span><span class="n">d_lat</span><span class="p">,</span><span class="w"> </span><span class="k">g</span><span class="p">.</span><span class="n">d_lon</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">gravity_term</span><span class="w"> </span><span class="k">g</span><span class="p">,</span><span class="w"> </span><span class="n">global_k</span><span class="w"> </span><span class="n">k</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">g</span><span class="p">.</span><span class="n">observed_trips</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">5000</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Fórmula Haversine</strong>:</p>
+<ul>
+<li><code>111.32</code> → km por grado de latitud</li>
+<li><code>COS(RADIANS(...))</code> → Corrección por curvatura terrestre</li>
+<li><code>GREATEST(0.5, ...)</code> → Evita división por 0 en intrazonales</li>
+</ul>
+<p><strong>Interpretación de resultados</strong>:</p>
+<div class="codehilite"><pre><span></span><code>Ratio = 7.19 → Hay 7x MÁS viajes de los esperados
+Ratio = 0.5  → Hay mitad de viajes de los esperados
+Ratio = 1.0  → Coincide perfectamente con el modelo
+</code></pre></div>
+
+<hr />
+<h2 id="resumen-tecnico">RESUMEN TÉCNICO</h2>
+<h3 id="decisiones-clave">Decisiones Clave</h3>
+<table>
+<thead>
+<tr>
+<th>Decisión</th>
+<th>Por qué</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DuckDB</td>
+<td>OLAP optimizado: 10-100x más rápido en análisis</td>
+</tr>
+<tr>
+<td>3 capas</td>
+<td>Bronze (raw) → Silver (clean) → Gold (metrics)</td>
+</tr>
+<tr>
+<td>Sin JOINs</td>
+<td>60x más rápido: 25 seg vs 1540 seg</td>
+</tr>
+<tr>
+<td>COPY FROM</td>
+<td>Bulk load: 10-100x más que INSERT fila a fila</td>
+</tr>
+<tr>
+<td>Pragmas</td>
+<td>Aprovecha 16GB RAM y 8 cores</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Fecha</strong>: 2025-12-04</p>
+        
+        <div class="footer">
+            <p>Mobility Lakehouse Project - Sprint 2</p>
+            <p>Para guardar como PDF: Presiona <strong>Ctrl+P</strong> → Selecciona "Guardar como PDF"</p>
+        </div>
+    </div>
+</body>
+</html>

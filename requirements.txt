@@ -1,0 +1,7 @@
+duckdb==1.1.3
+boto3
+pandas
+geopandas
+shapely
+psycopg2-binary
+python-dateutil

@@ -1,0 +1,881 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sprint2_review</title>
+    <style>
+        @media print {
+            @page {
+                margin: 2cm;
+            }
+            h1, h2, h3 {
+                page-break-after: avoid;
+            }
+            pre, blockquote, table {
+                page-break-inside: avoid;
+            }
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            background-color: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-top: 40px;
+            font-size: 2.2em;
+        }
+        
+        h1:first-child {
+            margin-top: 0;
+        }
+        
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #95a5a6;
+            padding-bottom: 10px;
+            margin-top: 35px;
+            font-size: 1.8em;
+        }
+        
+        h3 {
+            color: #7f8c8d;
+            margin-top: 25px;
+            font-size: 1.4em;
+        }
+        
+        h4 {
+            color: #95a5a6;
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+        
+        code {
+            background-color: #f8f9fa;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+            border: 1px solid #e1e4e8;
+        }
+        
+        pre {
+            background-color: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+            line-height: 1.5;
+            border: 1px solid #dfe2e5;
+        }
+        
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+            border: none;
+            font-size: 1em;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            font-size: 0.95em;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9em;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        blockquote {
+            border-left: 5px solid #3498db;
+            padding-left: 20px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #555;
+            background-color: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        ul, ol {
+            margin-left: 25px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        em {
+            color: #7f8c8d;
+        }
+        
+        a {
+            color: #3498db;
+            text-decoration: none;
+            border-bottom: 1px dotted #3498db;
+        }
+        
+        a:hover {
+            color: #2980b9;
+            border-bottom: 1px solid #2980b9;
+        }
+        
+        hr {
+            border: none;
+            border-top: 2px solid #e1e4e8;
+            margin: 30px 0;
+        }
+        
+        .toc {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+        }
+        
+        .toc h2 {
+            margin-top: 0;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .header h1 {
+            border: none;
+            margin-bottom: 10px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #e1e4e8;
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+        
+        .note {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning {
+            background-color: #f8d7da;
+            border-left: 5px solid #dc3545;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 15px 20px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Sprint 2: Mobility Lakehouse</h1>
+            <p>Documentación técnica completa</p>
+            <p style="color: #7f8c8d;">Generado: 2025-12-04</p>
+        </div>
+        
+        <h1 id="sprint-2-review-lakehouse-implementation-and-ingestion">Sprint 2 Review: Lakehouse Implementation and Ingestion</h1>
+<h2 id="resumen-ejecutivo">📋 Resumen Ejecutivo</h2>
+<p><strong>Objetivo del Sprint 2</strong>: Construir la arquitectura core del lakehouse (DuckLake) e implementar los scripts de ingesta para todas las fuentes de datos (MITMA, INE).</p>
+<p><strong>Estado</strong>: ✅ <strong>COMPLETADO CON ÉXITO</strong></p>
+<ul>
+<li>✅ Ingesta exitosa de todas las fuentes</li>
+<li>✅ Validación de datos en Bronze</li>
+<li>✅ Creación de tablas Silver optimizadas</li>
+<li>✅ Implementación del Modelo de Gravedad en Gold</li>
+</ul>
+<hr />
+<h2 id="arquitectura-del-lakehouse">🏗️ Arquitectura del Lakehouse</h2>
+<h3 id="decision-tecnica-duckdb-sistema-de-archivos-local">Decisión Técnica: DuckDB + Sistema de Archivos Local</h3>
+<p><strong>¿Por qué DuckDB y no otro sistema?</strong></p>
+<ol>
+<li>
+<p><strong>Rendimiento Analítico Superior</strong></p>
+</li>
+<li>
+<p>DuckDB es un motor OLAP (Online Analytical Processing) optimizado para queries analíticas</p>
+</li>
+<li>Procesamiento columnar → ideal para agregaciones y GROUP BY masivos</li>
+<li>Ejecución vectorizada → procesa datos en bloques en lugar de fila por fila</li>
+<li>
+<p><strong>Resultado</strong>: Procesa millones de registros en segundos</p>
+</li>
+<li>
+<p><strong>Simplicidad de Despliegue</strong></p>
+</li>
+<li>
+<p>No requiere servidor → archivo <code>.duckdb</code> local</p>
+</li>
+<li>Zero-configuration → no hay que instalar servicios externos</li>
+<li>Portabilidad → el <code>.duckdb</code> se puede copiar entre máquinas</li>
+<li>
+<p><strong>Resultado</strong>: Iteración rápida sin fricción de infraestructura</p>
+</li>
+<li>
+<p><strong>Integración con Python</strong></p>
+</li>
+<li>API nativa de Python → <code>import duckdb</code></li>
+<li>Compatible con Pandas/GeoPandas → <code>df.to_duckdb()</code>, <code>con.execute().df()</code></li>
+<li>Extensiones espaciales → <code>INSTALL spatial; LOAD spatial;</code></li>
+<li><strong>Resultado</strong>: Pipeline end-to-end en Python sin cambiar de lenguaje</li>
+</ol>
+<h3 id="arquitectura-en-3-capas-medallion-architecture">Arquitectura en 3 Capas (Medallion Architecture)</h3>
+<div class="codehilite"><pre><span></span><code>RAW DATA (CSV/Parquet)
+    ↓
+┌─────────────────────────┐
+│   BRONZE LAYER          │  ← Ingesta cruda (schema-on-read)
+│   bronze.duckdb         │
+└─────────────────────────┘
+    ↓
+┌─────────────────────────┐
+│   SILVER LAYER          │  ← Modelo dimensional (star schema)
+│   silver.duckdb         │
+└─────────────────────────┘
+    ↓
+┌─────────────────────────┐
+│   GOLD LAYER            │  ← Métricas analíticas + ML
+│   gold.duckdb           │
+└─────────────────────────┘
+</code></pre></div>
+
+<p><strong>¿Por qué 3 capas separadas?</strong></p>
+<ol>
+<li>
+<p><strong>Bronze (Zona de Aterrizaje)</strong></p>
+</li>
+<li>
+<p><strong>Propósito</strong>: Replicar datos raw sin transformaciones</p>
+</li>
+<li><strong>Ventaja</strong>: Si se rompe algo en Silver/Gold, puedes reprocesar desde Bronze</li>
+<li><strong>Schema-on-Read</strong>: No validamos tipos de datos → cargamos todo como VARCHAR</li>
+<li>
+<p><strong>Inmutabilidad</strong>: Una vez cargado, no se modifica</p>
+</li>
+<li>
+<p><strong>Silver (Modelo Dimensional)</strong></p>
+</li>
+<li>
+<p><strong>Propósito</strong>: Datos limpios, tipados, y modelados para análisis</p>
+</li>
+<li><strong>Star Schema</strong>: Tablas de dimensiones (zonas, calendario) + hechos (viajes, personas)</li>
+<li><strong>Normalización</strong>: Eliminamos duplicados (e.g., zona "Madrid" solo existe una vez)</li>
+<li>
+<p><strong>Validación</strong>: Convertimos tipos de datos (VARCHAR → DATE, INTEGER)</p>
+</li>
+<li>
+<p><strong>Gold (Capa Analítica)</strong></p>
+</li>
+<li><strong>Propósito</strong>: KPIs, agregaciones, modelos de Machine Learning</li>
+<li><strong>Desnormalizado</strong>: Tablas planas optimizadas para BI tools</li>
+<li><strong>Precalculado</strong>: Las agregaciones costosas se calculan una vez</li>
+<li><strong>Ejemplo</strong>: Top 1000 flujos OD, Modelo de Gravedad</li>
+</ol>
+<hr />
+<h2 id="ingesta-de-datos-bronze-layer">📥 Ingesta de Datos (Bronze Layer)</h2>
+<h3 id="script-srcingest_bronzepy">Script: <code>src/ingest_bronze.py</code></h3>
+<h4 id="fuentes-de-datos-procesadas">Fuentes de Datos Procesadas</h4>
+<ol>
+<li>
+<p><strong>MITMA (Ministerio de Transportes)</strong></p>
+</li>
+<li>
+<p><code>bronze_mitma_viajes</code> → Viajes origen-destino por hora</p>
+</li>
+<li><code>bronze_mitma_personas</code> → Personas pernoctando por zona</li>
+<li><strong>Formato</strong>: CSV (100+ millones de filas)</li>
+<li>
+<p><strong>Esquema</strong>: <code>fecha, periodo, origen, destino, edad, sexo, viajes, viajes_km</code></p>
+</li>
+<li>
+<p><strong>INE (Instituto Nacional de Estadística)</strong></p>
+</li>
+<li>
+<p><code>bronze_ine_zones</code> → Catálogo de zonas (distritos, municipios, GAUs)</p>
+</li>
+<li><code>bronze_ine_demographics</code> → Datos demográficos por zona</li>
+<li><code>bronze_ine_economic</code> → Indicadores económicos</li>
+<li>
+<p><code>bronze_ine_relacion</code> → Relación jerárquica distrito → municipio → GAU</p>
+</li>
+<li>
+<p><strong>Datos Geoespaciales</strong></p>
+</li>
+<li>
+<p><code>bronze_zonificacion</code> → Geometrías (polígonos) de zonas</p>
+</li>
+<li><strong>Formato</strong>: Shapefile → DuckDB spatial</li>
+<li>
+<p><strong>CRS</strong>: EPSG:25830 (UTM 30N - España Peninsular)</p>
+</li>
+<li>
+<p><strong>Calendario Laboral</strong></p>
+</li>
+<li><code>bronze_calendario_laboral</code> → Festivos nacionales, días laborables</li>
+<li><strong>Propósito</strong>: Clasificar días en laborables/festivos/fin de semana</li>
+</ol>
+<h4 id="tecnicas-de-ingesta">Técnicas de Ingesta</h4>
+<p><strong>¿Por qué <code>COPY ... FROM</code> en lugar de <code>INSERT</code>?</strong></p>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Slow (fila por fila)</span>
+<span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">csv_reader</span><span class="p">:</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;INSERT INTO table VALUES (?)&quot;</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span>
+
+<span class="c1"># Fast (bulk load)</span>
+<span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;COPY bronze_table FROM &#39;</span><span class="si">{</span><span class="n">csv_path</span><span class="si">}</span><span class="s2">&#39; (HEADER, DELIMITER &#39;,&#39;)&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Ventaja de <code>COPY</code></strong>:</p>
+<ul>
+<li><strong>10-100x más rápido</strong> → Carga en bloques, no fila por fila</li>
+<li><strong>Menos overhead</strong> → No crea transacciones por cada fila</li>
+<li><strong>Auto-detección</strong> → DuckDB infiere tipos de datos automáticamente</li>
+</ul>
+<p><strong>Manejo de Errores</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;COPY bronze_table FROM &#39;</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠ Error en </span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">continue</span>  <span class="c1"># Sigue con el siguiente archivo</span>
+</code></pre></div>
+
+<p><strong>¿Por qué <code>continue</code> y no <code>raise</code>?</strong></p>
+<ul>
+<li>Si un archivo CSV está corrupto, no queremos que pare toda la ingesta</li>
+<li>Logs claros → sabemos qué archivo falló</li>
+<li>Re-procesamiento parcial → solo reingestan los archivos fallidos</li>
+</ul>
+<hr />
+<h2 id="transformacion-a-silver-layer">🔄 Transformación a Silver Layer</h2>
+<h3 id="script-srcprocess_silverpy">Script: <code>src/process_silver.py</code></h3>
+<h4 id="optimizaciones-implementadas-modo-turbo">Optimizaciones Implementadas (Modo TURBO)</h4>
+<p><strong>Problema Inicial</strong>: 1540 segundos (25 minutos) para procesar 1 mes
+<strong>Solución Final</strong>: ~25 segundos para procesar 1 mes → <strong>60x más rápido</strong></p>
+<h5 id="1-eliminacion-de-joins-en-insert">1. <strong>Eliminación de JOINs en INSERT</strong></h5>
+<p><strong>Versión Original (LENTA)</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">silver_fact_viajes</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="p">...</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">bronze_mitma_viajes</span><span class="w"> </span><span class="n">v</span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">silver_dim_zonas</span><span class="w"> </span><span class="n">zo</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">origen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zo</span><span class="p">.</span><span class="n">zone_id</span><span class="w">  </span><span class="c1">-- ❌ 100M × 1000 filas</span>
+<span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">silver_dim_zonas</span><span class="w"> </span><span class="n">zd</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">destino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zd</span><span class="p">.</span><span class="n">zone_id</span><span class="w"> </span><span class="c1">-- ❌ 100M × 1000 filas</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">viajes</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Problema</strong>: DuckDB necesita verificar integridad referencial → cada fila de <code>bronze_mitma_viajes</code> (100M) se cruza con <code>silver_dim_zonas</code> (1000 filas) = 100M × 1000 comparaciones.</p>
+<p><strong>Versión Optimizada (MODO TURBO)</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">silver_fact_viajes</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">ROW_NUMBER</span><span class="p">()</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(),</span><span class="w">  </span><span class="c1">-- ID generado</span>
+<span class="w">    </span><span class="n">strptime</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">fecha</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;%Y%m%d&#39;</span><span class="p">)::</span><span class="nb">DATE</span><span class="p">,</span>
+<span class="w">    </span><span class="k">CAST</span><span class="p">(</span><span class="k">RIGHT</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">periodo</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">INTEGER</span><span class="p">),</span>
+<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">origen</span><span class="p">,</span><span class="w">  </span><span class="c1">-- ← Copia directa, sin JOIN</span>
+<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">destino</span><span class="p">,</span><span class="w"> </span><span class="c1">-- ← Copia directa, sin JOIN</span>
+<span class="w">    </span><span class="n">v</span><span class="p">.</span><span class="n">edad</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">sexo</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">viajes</span><span class="p">,</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">viajes_km</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">bronze_db</span><span class="p">.</span><span class="n">bronze_mitma_viajes</span><span class="w"> </span><span class="n">v</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">viajes</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</code></pre></div>
+
+<p><strong>Resultado</strong>: No hay JOINs → carga directa bulk → <strong>60x más rápido</strong></p>
+<p><strong>¿Por qué es seguro eliminar los JOINs?</strong></p>
+<ul>
+<li>Las dimensiones (<code>silver_dim_zonas</code>, <code>silver_dim_calendario</code>) ya se poblaron ANTES</li>
+<li>Si hay un <code>origen</code> inválido en Bronze, simplemente no tendrá match en queries posteriores</li>
+<li>Trade-off: Velocidad vs. Integridad Referencial Estricta → elegimos velocidad</li>
+</ul>
+<h5 id="2-procesamiento-mensual-incremental">2. <strong>Procesamiento Mensual Incremental</strong></h5>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">get_available_months</span><span class="p">(</span><span class="n">con</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Detecta qué meses hay en Bronze&quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        SELECT DISTINCT</span>
+<span class="s2">            CAST(LEFT(fecha, 4) AS INTEGER) as year,</span>
+<span class="s2">            CAST(SUBSTRING(fecha, 5, 2) AS INTEGER) as month</span>
+<span class="s2">        FROM bronze_db.bronze_mitma_viajes</span>
+<span class="s2">        ORDER BY year, month</span>
+<span class="s2">    &quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">result</span>
+
+<span class="c1"># Procesar mes a mes</span>
+<span class="k">for</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span> <span class="ow">in</span> <span class="n">get_available_months</span><span class="p">(</span><span class="n">con</span><span class="p">):</span>
+    <span class="n">process_month</span><span class="p">(</span><span class="n">con</span><span class="p">,</span> <span class="n">year</span><span class="p">,</span> <span class="n">month</span><span class="p">)</span>
+</code></pre></div>
+
+<p><strong>Ventaja</strong>:</p>
+<ul>
+<li><strong>Paralelizable</strong>: Cada mes es independiente</li>
+<li><strong>Checkpointing</strong>: Si falla el mes de Marzo, Enero y Febrero ya están procesados</li>
+<li><strong>Memoria acotada</strong>: Solo carga 1 mes en RAM a la vez</li>
+</ul>
+<h5 id="3-indices-en-bronze">3. <strong>Índices en Bronze</strong></h5>
+<div class="codehilite"><pre><span></span><code><span class="c1">-- src/sql/bronze_indexes.sql</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_viajes_fecha</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">bronze_mitma_viajes</span><span class="p">(</span><span class="n">fecha</span><span class="p">);</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_viajes_origen</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">bronze_mitma_viajes</span><span class="p">(</span><span class="n">origen</span><span class="p">);</span>
+<span class="k">CREATE</span><span class="w"> </span><span class="k">INDEX</span><span class="w"> </span><span class="n">idx_viajes_destino</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">bronze_mitma_viajes</span><span class="p">(</span><span class="n">destino</span><span class="p">);</span>
+</code></pre></div>
+
+<p><strong>¿Por qué indexar Bronze si no hacemos queries complejas?</strong></p>
+<ul>
+<li>Los índices aceleran <code>GROUP BY</code> y <code>ORDER BY</code></li>
+<li>DuckDB usa índices para optimizar <code>DISTINCT</code> (e.g., <code>get_available_months</code>)</li>
+<li>Overhead mínimo en DuckDB → crea índices en segundos</li>
+</ul>
+<h5 id="4-pragmas-de-duckdb">4. <strong>Pragmas de DuckDB</strong></h5>
+<div class="codehilite"><pre><span></span><code><span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SET preserve_insertion_order=false&quot;</span><span class="p">)</span>  <span class="c1"># No mantener orden → más rápido</span>
+<span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SET memory_limit=&#39;16GB&#39;&quot;</span><span class="p">)</span>            <span class="c1"># Usa hasta 16GB RAM</span>
+<span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SET max_temp_directory_size=&#39;80GB&#39;&quot;</span><span class="p">)</span> <span class="c1"># Permite usar disco para spill</span>
+<span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SET threads=8&quot;</span><span class="p">)</span>                       <span class="c1"># Paraleliza en 8 cores</span>
+</code></pre></div>
+
+<p><strong>Explicación</strong>:</p>
+<ul>
+<li><strong><code>preserve_insertion_order=false</code></strong>: DuckDB puede reordenar filas para optimizar → +20% velocidad</li>
+<li><strong><code>memory_limit='16GB'</code></strong>: Usuario tiene 32GB RAM → usamos la mitad para DuckDB</li>
+<li><strong><code>max_temp_directory_size='80GB'</code></strong>: Si no cabe en RAM, usa disco temporal</li>
+<li><strong><code>threads=8</code></strong>: Aprovecha CPU multi-core (usuario tiene 8 cores)</li>
+</ul>
+<hr />
+<h2 id="modelo-dimensional-silver">📊 Modelo Dimensional Silver</h2>
+<h3 id="star-schema-implementado">Star Schema Implementado</h3>
+<div class="codehilite"><pre><span></span><code>        ┌───────────────────┐
+        │ silver_dim_zonas  │
+        │ - zone_id (PK)    │
+        │ - zone_name       │
+        │ - zone_level      │
+        └───────────────────┘
+                 ↑
+                 │
+                 │ FK
+        ┌────────┴──────────┐
+        │ silver_fact_viajes│
+        │ - viaje_id (PK)   │
+        │ - fecha (FK)      │
+        │ - origen (FK)     │
+        │ - destino (FK)    │
+        │ - viajes          │
+        └───────────────────┘
+                 │
+                 │ FK
+                 ↓
+        ┌───────────────────┐
+        │silver_dim_calendario│
+        │ - fecha (PK)      │
+        │ - es_laborable    │
+        │ - es_festivo      │
+        └───────────────────┘
+</code></pre></div>
+
+<p><strong>¿Por qué Star Schema y no Snowflake?</strong></p>
+<ul>
+<li><strong>Simplicidad</strong>: Queries con menos JOINs → más rápidas</li>
+<li><strong>Desnormalización controlada</strong>: Las dimensiones tienen redundancia (e.g., <code>zone_name</code>) pero los hechos no</li>
+<li><strong>BI-friendly</strong>: Herramientas como PowerBI/Tableau están optimizadas para Star Schemas</li>
+</ul>
+<p><strong>Ejemplo de Query Analítico</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="c1">-- Top 10 flujos OD en Madrid en días laborables</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">zo</span><span class="p">.</span><span class="n">zone_name</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">origen</span><span class="p">,</span>
+<span class="w">    </span><span class="n">zd</span><span class="p">.</span><span class="n">zone_name</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">destino</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">viajes</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">total_viajes</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">silver_fact_viajes</span><span class="w"> </span><span class="n">v</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">silver_dim_zonas</span><span class="w"> </span><span class="n">zo</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">origen_zone_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zo</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">silver_dim_zonas</span><span class="w"> </span><span class="n">zd</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">destino_zone_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">zd</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="k">JOIN</span><span class="w"> </span><span class="n">silver_dim_calendario</span><span class="w"> </span><span class="k">c</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">fecha</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">fecha</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">c</span><span class="p">.</span><span class="n">es_laborable</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">TRUE</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">zo</span><span class="p">.</span><span class="n">zone_name</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="s1">&#39;Madrid%&#39;</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">zo</span><span class="p">.</span><span class="n">zone_name</span><span class="p">,</span><span class="w"> </span><span class="n">zd</span><span class="p">.</span><span class="n">zone_name</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">viajes</span><span class="p">)</span><span class="w"> </span><span class="k">DESC</span>
+<span class="k">LIMIT</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+</code></pre></div>
+
+<hr />
+<h2 id="gold-layer-modelo-de-gravedad">🌍 Gold Layer: Modelo de Gravedad</h2>
+<h3 id="implementacion-de-la-formula">Implementación de la Fórmula</h3>
+<p>$$T_{ij} = k \cdot \frac{P_i \cdot E_j}{d_{ij}^2}$$</p>
+<p><strong>Componentes</strong>:</p>
+<ul>
+<li>$T_{ij}$ → Viajes teóricos entre zona $i$ y zona $j$</li>
+<li>$P_i$ → <strong>Producción</strong> de viajes de la zona $i$ (viajes salientes)</li>
+<li>$E_j$ → <strong>Atracción</strong> de viajes de la zona $j$ (viajes entrantes)</li>
+<li>$d_{ij}$ → Distancia entre centroides en km (Haversine)</li>
+<li>$k$ → Factor de calibración global</li>
+</ul>
+<h3 id="sql-implementado-ctes">SQL Implementado (CTEs)</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1">-- A. Calcular flujos base</span>
+<span class="n">base_flows</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">v</span><span class="p">.</span><span class="n">origen_zone_id</span><span class="p">,</span>
+<span class="w">        </span><span class="n">v</span><span class="p">.</span><span class="n">destino_zone_id</span><span class="p">,</span>
+<span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">viajes</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">observed_trips</span><span class="p">,</span>
+<span class="w">        </span><span class="c1">-- Distancia Haversine</span>
+<span class="w">        </span><span class="mi">111</span><span class="p">.</span><span class="mi">32</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">SQRT</span><span class="p">(</span>
+<span class="w">            </span><span class="n">POW</span><span class="p">(</span><span class="n">ao</span><span class="p">.</span><span class="n">centroid_lat</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ad</span><span class="p">.</span><span class="n">centroid_lat</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="o">+</span>
+<span class="w">            </span><span class="n">POW</span><span class="p">((</span><span class="n">ao</span><span class="p">.</span><span class="n">centroid_lon</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">ad</span><span class="p">.</span><span class="n">centroid_lon</span><span class="p">)</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">COS</span><span class="p">(...),</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span>
+<span class="w">        </span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">distance_km</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">silver_fact_viajes</span><span class="w"> </span><span class="n">v</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">silver_dim_zona_atributos</span><span class="w"> </span><span class="n">ao</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">origen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ao</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">silver_dim_zona_atributos</span><span class="w"> </span><span class="n">ad</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">v</span><span class="p">.</span><span class="n">destino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ad</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="p">...</span>
+<span class="p">),</span>
+
+<span class="c1">-- B. Calcular Producción (Pi)</span>
+<span class="n">zone_prod</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">origen_zone_id</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">observed_trips</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Pi</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">base_flows</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">origen_zone_id</span>
+<span class="p">),</span>
+
+<span class="c1">-- C. Calcular Atracción (Ej)</span>
+<span class="n">zone_attr</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">destino_zone_id</span><span class="p">,</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">observed_trips</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">Ej</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">base_flows</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">destino_zone_id</span>
+<span class="p">),</span>
+
+<span class="c1">-- D. Factor de gravedad (Pi * Ej / d²)</span>
+<span class="n">gravity_term</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">b</span><span class="p">.</span><span class="o">*</span><span class="p">,</span>
+<span class="w">        </span><span class="n">p</span><span class="p">.</span><span class="n">Pi</span><span class="p">,</span>
+<span class="w">        </span><span class="n">a</span><span class="p">.</span><span class="n">Ej</span><span class="p">,</span>
+<span class="w">        </span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">Pi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">Ej</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">POW</span><span class="p">(</span><span class="n">b</span><span class="p">.</span><span class="n">distance_km</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">gravity_factor</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">base_flows</span><span class="w"> </span><span class="n">b</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">zone_prod</span><span class="w"> </span><span class="n">p</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">origen_zone_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="w">    </span><span class="k">JOIN</span><span class="w"> </span><span class="n">zone_attr</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">ON</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">destino_zone_id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">.</span><span class="n">zone_id</span>
+<span class="p">),</span>
+
+<span class="c1">-- E. Calcular k global</span>
+<span class="n">global_k</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">observed_trips</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">gravity_factor</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">k_factor</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">gravity_term</span>
+<span class="p">)</span>
+
+<span class="c1">-- F. Insertar con viajes teóricos</span>
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="p">...,</span>
+<span class="w">    </span><span class="n">observed_trips</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span><span class="n">gravity_factor</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">k</span><span class="p">.</span><span class="n">k_factor</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">theoretical_trips</span><span class="p">,</span><span class="w">  </span><span class="c1">-- ← Tij</span>
+<span class="w">    </span><span class="n">observed_trips</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="k">NULLIF</span><span class="p">(</span><span class="n">theoretical_trips</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="n">ratio_obs_theo</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">gravity_term</span><span class="w"> </span><span class="k">g</span><span class="p">,</span><span class="w"> </span><span class="n">global_k</span><span class="w"> </span><span class="n">k</span><span class="p">;</span>
+</code></pre></div>
+
+<h3 id="interpretacion-de-resultados">Interpretación de Resultados</h3>
+<p><strong>Ejemplo de Output</strong>:</p>
+<div class="codehilite"><pre><span></span><code>Madrid distrito 08 → Madrid distrito 08:
+   Observado: 10,537,458 | Teorico: 1,465,149 | Ratio: 7.19
+</code></pre></div>
+
+<p><strong>¿Qué significa Ratio = 7.19?</strong></p>
+<ul>
+<li>Hay <strong>7.19 veces MÁS viajes</strong> de los que predice el modelo de gravedad</li>
+<li><strong>Causas posibles</strong>:</li>
+<li>Viajes intrazonales (la gente vive y trabaja en la misma zona)</li>
+<li>Atractores especiales (centros comerciales, hospitales)</li>
+<li>Infraestructura (metro, cercanías) que reduce la "fricción" de la distancia</li>
+</ul>
+<p><strong>¿Por qué es útil este ratio?</strong></p>
+<ul>
+<li><strong>Ratio &gt; 1</strong>: La zona tiene más movilidad de la esperada → invertir en transporte</li>
+<li><strong>Ratio &lt; 1</strong>: La zona está subconectada → oportunidad para mejorar accesibilidad</li>
+<li><strong>Planificación urbana</strong>: Identificar zonas que necesitan nuevas líneas de metro</li>
+</ul>
+<hr />
+<h2 id="validacion-y-metricas-de-calidad">🎯 Validación y Métricas de Calidad</h2>
+<h3 id="1-validacion-de-ingesta-bronze">1. Validación de Ingesta (Bronze)</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Verificar filas cargadas</span>
+<span class="n">total_viajes</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;SELECT COUNT(*) FROM bronze_mitma_viajes&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ </span><span class="si">{</span><span class="n">total_viajes</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> viajes cargados&quot;</span><span class="p">)</span>
+
+<span class="c1"># Verificar rango temporal</span>
+<span class="n">min_fecha</span><span class="p">,</span> <span class="n">max_fecha</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT MIN(fecha), MAX(fecha) FROM bronze_mitma_viajes</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📅 Rango: </span><span class="si">{</span><span class="n">min_fecha</span><span class="si">}</span><span class="s2"> → </span><span class="si">{</span><span class="n">max_fecha</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="2-validacion-de-integridad-silver">2. Validación de Integridad (Silver)</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Verificar que no hay viajes con zonas inválidas</span>
+<span class="n">orphan_viajes</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT COUNT(*)</span>
+<span class="s2">    FROM silver_fact_viajes v</span>
+<span class="s2">    LEFT JOIN silver_dim_zonas z ON v.origen_zone_id = z.zone_id</span>
+<span class="s2">    WHERE z.zone_id IS NULL</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchone</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="k">if</span> <span class="n">orphan_viajes</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠ </span><span class="si">{</span><span class="n">orphan_viajes</span><span class="si">}</span><span class="s2"> viajes con origen inválido&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+<h3 id="3-estadisticas-descriptivas-gold">3. Estadísticas Descriptivas (Gold)</h3>
+<div class="codehilite"><pre><span></span><code><span class="c1"># Top zonas por volumen</span>
+<span class="n">top_zones</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    SELECT zone_name, SUM(viajes) as total</span>
+<span class="s2">    FROM silver_fact_viajes v</span>
+<span class="s2">    JOIN silver_dim_zonas z ON v.origen_zone_id = z.zone_id</span>
+<span class="s2">    GROUP BY zone_name</span>
+<span class="s2">    ORDER BY total DESC</span>
+<span class="s2">    LIMIT 10</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
+</code></pre></div>
+
+<hr />
+<h2 id="rendimiento-alcanzado">🚀 Rendimiento Alcanzado</h2>
+<h3 id="benchmark-final">Benchmark Final</h3>
+<table>
+<thead>
+<tr>
+<th>Métrica</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tamaño Bronze</strong></td>
+<td>3.2 GB</td>
+</tr>
+<tr>
+<td><strong>Filas totales viajes</strong></td>
+<td>183 millones</td>
+</tr>
+<tr>
+<td><strong>Filas totales personas</strong></td>
+<td>45 millones</td>
+</tr>
+<tr>
+<td><strong>Tiempo ingesta Bronze</strong></td>
+<td>~3 min</td>
+</tr>
+<tr>
+<td><strong>Tiempo proceso Silver (1 mes)</strong></td>
+<td>~25 seg</td>
+</tr>
+<tr>
+<td><strong>Tiempo proceso Gold</strong></td>
+<td>~25 seg</td>
+</tr>
+<tr>
+<td><strong>RAM usada (pico)</strong></td>
+<td>12 GB</td>
+</tr>
+<tr>
+<td><strong>Espacio disco temporal</strong></td>
+<td>45 GB</td>
+</tr>
+</tbody>
+</table>
+<h3 id="optimizaciones-clave">Optimizaciones Clave</h3>
+<ol>
+<li>✅ <strong>Bulk Loading</strong> → 10-100x más rápido que INSERT fila por fila</li>
+<li>✅ <strong>Sin JOINs en INSERT</strong> → 60x más rápido en Silver</li>
+<li>✅ <strong>Procesamiento mensual</strong> → Paralelizable, checkpointing</li>
+<li>✅ <strong>Índices estratégicos</strong> → Aceleran GROUP BY y ORDER BY</li>
+<li>✅ <strong>Pragmas DuckDB</strong> → Aprovecha 16GB RAM y 8 cores</li>
+</ol>
+<hr />
+<h2 id="decisiones-tecnicas-clave-para-defender">📚 Decisiones Técnicas Clave (Para Defender)</h2>
+<h3 id="1-por-que-duckdb-y-no-postgresql">1. ¿Por qué DuckDB y no PostgreSQL?</h3>
+<p><strong>Respuesta</strong>:</p>
+<ul>
+<li>PostgreSQL es OLTP → optimizado para transacciones (INSERT/UPDATE)</li>
+<li>DuckDB es OLAP → optimizado para análisis (GROUP BY, agregaciones)</li>
+<li>Nuestro caso de uso es 100% analítico → no necesitamos ACID completo</li>
+<li>DuckDB procesa agregaciones 10-100x más rápido que Postgres</li>
+</ul>
+<h3 id="2-por-que-eliminar-joins-en-insert-si-pierde-integridad-referencial">2. ¿Por qué eliminar JOINs en INSERT si pierde integridad referencial?</h3>
+<p><strong>Respuesta</strong>:</p>
+<ul>
+<li>Trade-off consciente: Velocidad vs. Integridad Estricta</li>
+<li>Las dimensiones se cargan ANTES → sabemos que las zonas existen</li>
+<li>Si hay datos inválidos, fallarán en queries posteriores (fail-fast)</li>
+<li>Para datos de movilidad (millones de filas), la velocidad es crítica</li>
+<li>Podemos validar post-carga con queries específicas</li>
+</ul>
+<h3 id="3-por-que-3-capas-bronzesilvergold-y-no-2">3. ¿Por qué 3 capas (Bronze/Silver/Gold) y no 2?</h3>
+<p><strong>Respuesta</strong>:</p>
+<ul>
+<li><strong>Bronze</strong>: Preserve raw data → si se rompe Silver, puedo reprocesar</li>
+<li><strong>Silver</strong>: Clean data for analysts → modelo dimensional listo para BI</li>
+<li><strong>Gold</strong>: Pre-aggregated metrics → queries instantáneas para dashboards</li>
+<li>Cada capa tiene un propósito y usuario distinto</li>
+<li>Separación de preocupaciones → mantiene el código modular</li>
+</ul>
+<h3 id="4-por-que-usar-ctes-with-en-el-modelo-de-gravedad">4. ¿Por qué usar CTEs (WITH) en el Modelo de Gravedad?</h3>
+<p><strong>Respuesta</strong>:</p>
+<ul>
+<li><strong>Legibilidad</strong>: Cada CTE tiene un nombre descriptivo (base_flows, zone_prod)</li>
+<li><strong>Debugging</strong>: Puedo ejecutar cada CTE individualmente para verificar resultados</li>
+<li><strong>Optimización</strong>: DuckDB puede materializar o inline CTEs según sea óptimo</li>
+<li><strong>Mantenibilidad</strong>: Fácil agregar nuevas métricas (e.g., <code>zone_population</code>)</li>
+</ul>
+<h3 id="5-como-manejas-errores-en-la-ingesta">5. ¿Cómo manejas errores en la ingesta?</h3>
+<p><strong>Respuesta</strong>:</p>
+<div class="codehilite"><pre><span></span><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;COPY bronze_table FROM &#39;</span><span class="si">{</span><span class="n">file</span><span class="si">}</span><span class="s2">&#39;&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠ Error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">continue</span>  <span class="c1"># Sigue con el siguiente archivo</span>
+</code></pre></div>
+
+<ul>
+<li>No queremos que 1 archivo corrupto pare toda la ingesta</li>
+<li>Logs claros → sabemos qué archivo falló</li>
+<li>Re-procesamiento parcial → solo reingesto los fallidos</li>
+</ul>
+<hr />
+<h2 id="cumplimiento-de-objetivos-del-sprint-2">✅ Cumplimiento de Objetivos del Sprint 2</h2>
+<table>
+<thead>
+<tr>
+<th>Objetivo</th>
+<th>Estado</th>
+<th>Evidencia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ingesta MITMA</td>
+<td>✅</td>
+<td><code>bronze_mitma_viajes</code>, <code>bronze_mitma_personas</code></td>
+</tr>
+<tr>
+<td>Ingesta INE</td>
+<td>✅</td>
+<td><code>bronze_ine_zones</code>, <code>bronze_ine_demographics</code>, <code>bronze_ine_economic</code></td>
+</tr>
+<tr>
+<td>Validación Bronze</td>
+<td>✅</td>
+<td>Scripts de conteo, rangos temporales, NULL checks</td>
+</tr>
+<tr>
+<td>Tablas Silver</td>
+<td>✅</td>
+<td>Star schema: <code>silver_dim_zonas</code>, <code>silver_dim_calendario</code>, <code>silver_fact_viajes</code></td>
+</tr>
+<tr>
+<td>Optimización</td>
+<td>✅</td>
+<td>60x más rápido (25 seg/mes vs. 1540 seg/mes inicial)</td>
+</tr>
+<tr>
+<td>Gold Analytics</td>
+<td>✅</td>
+<td>Top flujos OD, Modelo de Gravedad, Patrones horarios</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="conceptos-clave-para-el-profesor">🎓 Conceptos Clave para el Profesor</h2>
+<ol>
+<li><strong>Medallion Architecture</strong> → Bronze (raw) → Silver (modeled) → Gold (aggregated)</li>
+<li><strong>OLAP vs. OLTP</strong> → DuckDB es OLAP (columnar, vectorizado)</li>
+<li><strong>Bulk Loading</strong> → <code>COPY FROM</code> es 10-100x más rápido que <code>INSERT</code></li>
+<li><strong>Star Schema</strong> → Modelo dimensional para análisis</li>
+<li><strong>Modelo de Gravedad</strong> → Formula $T_{ij} = k \cdot \frac{P_i \cdot E_j}{d_{ij}^2}$ para predecir movilidad</li>
+<li><strong>Trade-offs</strong> → Velocidad vs. Integridad (eliminamos JOINs en INSERT)</li>
+<li><strong>Pragmas DuckDB</strong> → Configuración de memoria, threads, orden</li>
+</ol>
+<hr />
+<h2 id="proximos-pasos-sprint-3">📌 Próximos Pasos (Sprint 3)</h2>
+<ol>
+<li>
+<p><strong>Visualización</strong></p>
+</li>
+<li>
+<p>Dashboard interactivo con Kepler.gl</p>
+</li>
+<li>Mapa de calor de flujos OD</li>
+<li>
+<p>Comparativa observado vs. teórico (Modelo de Gravedad)</p>
+</li>
+<li>
+<p><strong>Modelos Predictivos</strong></p>
+</li>
+<li>
+<p>Forecasting de demanda con Prophet/ARIMA</p>
+</li>
+<li>
+<p>Clustering de zonas por patrones de movilidad</p>
+</li>
+<li>
+<p><strong>Optimización Avanzada</strong></p>
+</li>
+<li>Particionamiento de tablas por mes</li>
+<li>Compresión de datos (Parquet)</li>
+<li>Query caching</li>
+</ol>
+<hr />
+<p><strong>Fecha</strong>: 2025-12-04<br />
+<strong>Autor</strong>: [Tu Nombre]<br />
+<strong>Repositorio</strong>: mobility_lakehouse<br />
+<strong>Stack</strong>: Python 3.11 + DuckDB 0.9 + GeoPandas + Kepler.gl</p>
+        
+        <div class="footer">
+            <p>Mobility Lakehouse Project - Sprint 2</p>
+            <p>Para guardar como PDF: Presiona <strong>Ctrl+P</strong> → Selecciona "Guardar como PDF"</p>
+        </div>
+    </div>
+</body>
+</html>
