@@ -1,6 +1,6 @@
 # Mobility Lakehouse Project
 
-A modern Data Lakehouse implementation for mobility analysis using a Three Tier Architecture (Bronze, Silver, Gold). This project processes MITMA (Ministry of Transport) and INE (National Statistics Institute) data to generate spatial insights. This repository contains all the files created and used for the project. However, the final full execution only consists on the DAGs files where the Bronze ingestion, Silver and Gold transformation are fully executed using this DAGs. The files on the src and scripts folder were developed and creating during the sprints and here for testing local executions.
+A modern Data Lakehouse implementation for mobility analysis using a Three Tier Architecture (Bronze, Silver, Gold). This project processes MITMA (Ministry of Transport) and INE (National Statistics Institute) data to generate spatial insights. This repository contains all the files created and used for the project. However, the final full execution only consists on the DAGs files where the Bronze ingestion, Silver and Gold transformation are fully executed using this DAGs. The files on the src and scripts folder were developed and creating during the sprints and was used for testing local executions.
 
 ## Objetive
 
